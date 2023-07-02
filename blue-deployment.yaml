@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: color-app
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: color-app
+        version: blue
+    spec:
+      containers:
+      - name: color-app
+        image: muritala/color-dance:v1.1
+        env:
+        - name: COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: color-config
+              key: COLOR_BLUE
