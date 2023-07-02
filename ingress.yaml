@@ -21,3 +21,10 @@ spec:
             name: green-service
             port:
               number: 80
+      - path: /red
+        pathType: Prefix
+        backend:
+          service:
+            name: red-service
+            port:
+              number: 80

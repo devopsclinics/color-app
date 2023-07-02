@@ -5,6 +5,7 @@ metadata:
 data:
   COLOR_BLUE: "blue"
   COLOR_GREEN: "green"
+  COLOR_RED: "red"
 
 
 
