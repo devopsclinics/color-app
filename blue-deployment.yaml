@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: red-deployment
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: color-app
