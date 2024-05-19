@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: red-deployment
+  name: blue-deployment
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
       app: color-app
