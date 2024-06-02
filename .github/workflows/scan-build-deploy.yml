@@ -66,4 +66,4 @@ jobs:
         with:
           push: true
           # tags: muritala/color-app:latest
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:${GITHUB_SHA}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:${{GITHUB_SHA}}
