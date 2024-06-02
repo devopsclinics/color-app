@@ -98,7 +98,9 @@ jobs:
     - name: Update and Apply YAML Files
       run: |
         for file in *.yaml; do
-          sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:${{ github.sha }}|g' $file
-          kubectl apply -f $file
+          if [[ "$file" != "cloudbuild.yaml" ]]; then
+            sed -i 's|image:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:${{ github.sha }}|g' "$file"
+            kubectl apply -f "$file"
+          fi
         done
      
