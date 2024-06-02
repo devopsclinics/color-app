@@ -64,8 +64,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./Dockerfile
           push: true
           # tags: muritala/color-app:latest
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:latest
