@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: color-app
-        image: muritala/color-dance:v1.1
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:${{ github.sha }}
         env:
         - name: COLOR
           valueFrom:
