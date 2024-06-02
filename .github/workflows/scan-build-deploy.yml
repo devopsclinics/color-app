@@ -68,4 +68,4 @@ jobs:
           file: ./Dockerfile
           push: true
           # tags: muritala/color-app:latest
-          tags: ${{ secrets.DOCKER_USERNAME }}/color-app:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/color-app:${{ GITHUB_SHA }}
