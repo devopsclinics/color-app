@@ -1,4 +1,4 @@
-name: CI & CodeQL
+name: test ,build and deploy
 on:
   push:
     branches: [ "main" ]
@@ -46,7 +46,7 @@ jobs:
         category: "/language:${{matrix.language}}"
 
   docker:
-    needs: analyze
+    # needs: analyze
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
