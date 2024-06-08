@@ -15,6 +15,9 @@
 //         }
 //     }
 // }pipeline {
+
+
+
 pipeline {
     agent any
 
@@ -53,6 +56,10 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
+            environment {
+                JAVA_HOME = '/opt/jdk-13.0.1'
+                PATH = "${JAVA_HOME}/bin:${env.PATH}"
+            }
             steps {
                 withSonarQubeEnv('sq2') {
                     sh '''
