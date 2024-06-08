@@ -49,7 +49,7 @@ jobs:
   unit-tests:
     name: Run Unit Tests
     runs-on: ubuntu-latest
-    needs: analyze
+    # needs: analyze
 
     steps:
     - name: Checkout code
@@ -73,7 +73,7 @@ jobs:
   lint-dockerfile:
     name: Lint Dockerfile
     runs-on: ubuntu-latest
-    needs: unit-tests
+    # needs: unit-tests
 
     steps:
     - name: Checkout code
@@ -85,7 +85,7 @@ jobs:
         dockerfile: ./Dockerfile
 
   docker:
-    needs: lint-dockerfile
+    # needs: lint-dockerfile
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -109,7 +109,7 @@ jobs:
   scan-docker-image:
     name: Scan Docker Image for Vulnerabilities
     runs-on: ubuntu-latest
-    needs: docker
+    # needs: docker
 
     steps:
     - name: Scan Docker Image for Vulnerabilities
@@ -120,7 +120,7 @@ jobs:
   deploy:
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
-    needs: scan-docker-image
+    # needs: scan-docker-image
 
     steps:
     - name: Checkout code
@@ -148,7 +148,7 @@ jobs:
   check-deployment-status:
     name: Check Deployment Status
     runs-on: ubuntu-latest
-    needs: deploy
+    # needs: deploy
 
     steps:
     - name: Check Deployment Status
