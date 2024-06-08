@@ -22,6 +22,11 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk-amd64' // Adjust this path based on your system
+        PATH = "$JAVA_HOME/bin:$PATH"
+    }
+
     stages {
         stage('Checkout') {
             steps {
