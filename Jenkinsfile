@@ -30,10 +30,10 @@ pipeline {
             }
         }
 
-        stage('Install SonarQube Scanner') {
+        stage('Install Dependencies') {
             steps {
                 // Install the SonarQube Scanner for Python
-                sh 'pip install sonar-scanner'
+                sh 'pip3 install sonar-scanner'
             }
         }
 
