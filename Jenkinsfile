@@ -36,7 +36,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sq2') {
                     sh '''
-                        sonar-scanner \
+                        /opt/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=. \
                         -Dsonar.python.version=3.x
@@ -53,3 +53,4 @@ pipeline {
         }
     }
 }
+
