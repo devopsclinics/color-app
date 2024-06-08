@@ -65,7 +65,7 @@ jobs:
   hadolint:
     name: Run hadolint scanning
     runs-on: ubuntu-latest
-    depends-on: unit-tests
+    needs: unit-tests
     permissions:
       contents: read
       security-events: write
