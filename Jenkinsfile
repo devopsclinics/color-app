@@ -14,7 +14,7 @@
 //             }
 //         }
 //     }
-// }
+// }pipeline {
 pipeline {
     agent any
 
@@ -30,10 +30,15 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install SonarQube Scanner') {
             steps {
-                // Install the SonarQube Scanner for Python
-                sh 'pip3 install sonar-scanner'
+                // Download and install the SonarQube Scanner CLI
+                sh '''
+                    if [ ! -d "sonar-scanner-cli" ]; then
+                        wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip | busybox unzip -
+                        mv sonar-scanner-4.6.2.2472-linux sonar-scanner-cli
+                    fi
+                '''
             }
         }
 
@@ -41,7 +46,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sq1') {
                     sh '''
-                        sonar-scanner \
+                        ./sonar-scanner-cli/bin/sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=$SONAR_HOST_URL \
