@@ -52,6 +52,8 @@ pipeline {
             steps {
                 withSonarQubeEnv('sq1') {
                     sh '''
+                        export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+                        export PATH=$JAVA_HOME/bin:$PATH
                         ./sonar-scanner-cli/bin/sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=. \
