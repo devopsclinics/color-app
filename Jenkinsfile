@@ -18,11 +18,6 @@
 pipeline {
     agent any
 
-    environment {
-        JAVA_HOME = '/opt/jdk-13.0.1'
-        PATH = "${JAVA_HOME}/bin:${env.PATH}"
-    }
-
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
@@ -30,7 +25,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout your source code from the version control system
+                // Checkout your source code from your version control system
                 checkout scm
             }
         }
@@ -40,20 +35,18 @@ pipeline {
                 // Download and install the SonarQube Scanner CLI
                 sh '''
                     if [ ! -d "sonar-scanner-cli" ]; then
-                        wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip | busybox unzip -
-                        mv sonar-scanner-4.6.2.2472-linux sonar-scanner-cli
+                        wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip | busybox unzip -
+                        mv sonar-scanner-5.0.1.3006-linux sonar-scanner-cli
                         chmod +x sonar-scanner-cli/bin/sonar-scanner
                     fi
                 '''
             }
         }
 
-        stage('Verify Environment Variables') {
+        stage('Verify Java Installation') {
             steps {
-                // Print JAVA_HOME and PATH for debugging
+                // Print Java version for debugging
                 sh '''
-                    echo "JAVA_HOME: $JAVA_HOME"
-                    echo "PATH: $PATH"
                     java -version
                 '''
             }
@@ -61,15 +54,11 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sq1') {
+                withSonarQubeEnv('sq2') {
                     sh '''
-                        export JAVA_HOME=/opt/jdk-13.0.1
-                        export PATH=$JAVA_HOME/bin:$PATH
                         ./sonar-scanner-cli/bin/sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_TOKEN
+                        -Dsonar.sources=.
                     '''
                 }
             }
