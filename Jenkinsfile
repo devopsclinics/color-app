@@ -30,6 +30,13 @@ pipeline {
             }
         }
 
+        stage('Install SonarQube Scanner') {
+            steps {
+                // Install the SonarQube Scanner for Python
+                sh 'pip install sonar-scanner'
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sq1') {
