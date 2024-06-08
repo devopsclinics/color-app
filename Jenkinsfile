@@ -17,7 +17,6 @@
 // }pipeline {
 
 
-
 pipeline {
     agent any
 
@@ -33,23 +32,14 @@ pipeline {
             }
         }
 
-        stage('Verify Java Installation') {
-            steps {
-                // Print Java version for debugging
-                sh '''
-                    java -version
-                '''
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sq2') {
                     sh '''
-                        export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStorePassword=changeit"
-                        /opt/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
+                        sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=.
+                        -Dsonar.sources=. \
+                        -Dsonar.python.version=3.x
                     '''
                 }
             }
