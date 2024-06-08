@@ -18,13 +18,13 @@
 pipeline {
     agent any
 
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
+    environment {
+        JAVA_HOME = '/opt/jdk-13.0.1'
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
 
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk-amd64' // Adjust this path based on your system
-        PATH = "$JAVA_HOME/bin:$PATH"
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
     stages {
@@ -48,11 +48,22 @@ pipeline {
             }
         }
 
+        stage('Verify Environment Variables') {
+            steps {
+                // Print JAVA_HOME and PATH for debugging
+                sh '''
+                    echo "JAVA_HOME: $JAVA_HOME"
+                    echo "PATH: $PATH"
+                    java -version
+                '''
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sq1') {
                     sh '''
-                        export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+                        export JAVA_HOME=/opt/jdk-13.0.1
                         export PATH=$JAVA_HOME/bin:$PATH
                         ./sonar-scanner-cli/bin/sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
