@@ -37,6 +37,7 @@ pipeline {
                     if [ ! -d "sonar-scanner-cli" ]; then
                         wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip | busybox unzip -
                         mv sonar-scanner-4.6.2.2472-linux sonar-scanner-cli
+                        chmod +x sonar-scanner-cli/bin/sonar-scanner
                     fi
                 '''
             }
