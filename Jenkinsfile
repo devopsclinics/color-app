@@ -32,6 +32,19 @@ pipeline {
             }
         }
 
+        stage('Verify SonarQube Scanner Installation') {
+            steps {
+                // Verify SonarQube Scanner installation and print version
+                sh '''
+                    if [ ! -x /opt/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner ]; then
+                        echo "SonarQube Scanner not found or not executable"
+                        exit 1
+                    fi
+                    /opt/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner --version
+                '''
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sq2') {
@@ -53,4 +66,5 @@ pipeline {
         }
     }
 }
+
 
