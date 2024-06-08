@@ -33,19 +33,6 @@ pipeline {
             }
         }
 
-        stage('Install SonarQube Scanner') {
-            steps {
-                // Download and install the SonarQube Scanner CLI
-                sh '''
-                    if [ ! -d "sonar-scanner-cli" ]; then
-                        wget -qO- https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip | busybox unzip -
-                        mv sonar-scanner-5.0.1.3006-linux sonar-scanner-cli
-                        chmod +x sonar-scanner-cli/bin/sonar-scanner
-                    fi
-                '''
-            }
-        }
-
         stage('Verify Java Installation') {
             steps {
                 // Print Java version for debugging
@@ -56,14 +43,11 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            environment {
-                JAVA_HOME = '/opt/jdk-13.0.1'
-                PATH = "${JAVA_HOME}/bin:${env.PATH}"
-            }
             steps {
                 withSonarQubeEnv('sq2') {
                     sh '''
-                        ./sonar-scanner-cli/bin/sonar-scanner \
+                        export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStorePassword=changeit"
+                        /opt/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=.
                     '''
