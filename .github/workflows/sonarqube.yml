@@ -35,12 +35,12 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }} # SonarQube URL from repository secrets
         with:
           args: |
-            -Dsonar.projectKey=devopsclinics_color-app               # Unique SonarQube project key
-            -Dsonar.projectName="color-app"            # Optional, more readable project name
-            -Dsonar.sources=.                                # Specifies root directory for source files
-            -Dsonar.language=py                              # Sets language to Python for better analysis of Python files
-            -Dsonar.inclusions=**/*.py,**/Dockerfile         # Includes Python files and Dockerfiles for scanning
-            -Dsonar.python.version=3.x                       # Specify Python version for compatibility
-            -Dsonar.dockerfile.filePaths=**/Dockerfile       # Target Dockerfiles specifically for analysis
-            -Dsonar.verbose=true                             # Enables SonarQube's own debug mode
-            -X                                               # Enables full debug logging for the SonarQube scanner
+            -Dsonar.projectKey=devopsclinics_color-app              
+            -Dsonar.projectName="color-app"            
+            -Dsonar.sources=.                                
+            -Dsonar.language=py                              
+            -Dsonar.inclusions=**/*.py,**/Dockerfile        
+            -Dsonar.python.version=3.x                       
+            -Dsonar.dockerfile.filePaths=**/Dockerfile       
+            -Dsonar.verbose=true                            
+            -X                                             
