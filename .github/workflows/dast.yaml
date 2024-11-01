@@ -22,10 +22,16 @@ jobs:
           docker build -t python-app .
           docker run -d --name python-app --network zap-net -p 5000:5000 python-app
 
+      - name: Adjust Permissions for ZAP Output
+        run: sudo chmod -R 777 $GITHUB_WORKSPACE
+
       - name: Run OWASP ZAP Baseline Scan
         run: |
           docker run --rm --network zap-net -v ${{ github.workspace }}:/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable \
             zap-baseline.py -t http://python-app:5000 -g /zap/wrk/gen.conf -r /zap/wrk/testreport.html
+
+      - name: Adjust Permissions for ZAP Output
+        run: sudo chmod -R 777 $GITHUB_WORKSPACE
 
       - name: Show ZAP Report
         if: always()
