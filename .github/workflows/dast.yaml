@@ -27,7 +27,7 @@ jobs:
       - name: Start the Python application
         run: |
           nohup python app.py &  # Start app in the background
-          sleep 5  # Allow time for the app to start
+          sleep 20  # Add delay to ensure the app has time to start
 
       - name: Run ZAP Baseline Scan
         run: |
@@ -36,6 +36,7 @@ jobs:
             -g /zap/wrk/gen.conf \
             -r /zap/wrk/zap_report.html \
             --autooff
+
       - name: Upload ZAP HTML Report
         uses: actions/upload-artifact@v3
         with:
