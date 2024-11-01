@@ -10,8 +10,6 @@ jobs:
   dast:
     name: DAST with OWASP ZAP
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout Code
@@ -31,22 +29,14 @@ jobs:
         run: |
           python app.py &
         env:
-          COLOR: "blue"  # Environment variable for color, if applicable
+          COLOR: "blue"  # Set environment variable if applicable
 
       - name: Wait for Flask Application to Start
-        run: |
-          sleep 10  # Adjust based on startup time of the application
+        run: sleep 10  # Adjust based on startup time
 
-      - name: OWASP ZAP Scan
-        uses: zapbot/zap-action@v0.1.0
-        with:
-          target: 'http://localhost:5000'  # URL of the running Flask application
-          cmd_options: '-quick-scan'  # Optional: Use a quick scan for faster results
-
-      - name: Report ZAP Scan Results
-        if: always()
+      - name: Run OWASP ZAP Docker Scan
         run: |
-          cat /zap/wrk/output.json
+          docker run --rm -v $(pwd):/zap/wrk/:rw --network="host" owasp/zap2docker-stable zap-baseline.py -t http://localhost:5000 -r zap_report.html
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
