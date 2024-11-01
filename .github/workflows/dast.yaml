@@ -43,8 +43,8 @@ jobs:
             -t http://localhost:5000 -g /zap/wrk/gen.conf -r /zap/wrk/testreport.html
 
 
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: zap-report
-          path: zap-reports/zap_report.html
+    #   - name: Upload ZAP Report
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: zap-report
+    #       path: zap-reports/zap_report.html
