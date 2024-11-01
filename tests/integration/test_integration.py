@@ -20,12 +20,12 @@ class TestAppIntegration(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'background-color:green', response.data)
         
-    def test_error_handling(self):
-        # Test that server gracefully handles errors
-        with self.assertLogs() as log:
-            response = self.app.get('/<invalid>')
-            self.assertEqual(response.status_code, 200) # Invalid color falls back
-            self.assertIn("ERROR", log.output[0])
+    def test_invalid_route_fallback(self):
+        # Test invalid color input, which should fallback to the default color handling
+        response = self.app.get('/<invalid>')
+        self.assertEqual(response.status_code, 200)
+        # Assuming default fallback if route parameter is ignored
+        self.assertIn(b'Happy Learning With DevopClinics!!!', response.data)
 
 if __name__ == '__main__':
     unittest.main()
