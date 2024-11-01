@@ -14,25 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+      - name: Set up Docker Network
+        run: docker network create zap-network
 
-      - name: Install dependencies
+      - name: Build and Run Python Application
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Start the Python application
-        run: |
-          nohup python app.py &  # Start app in the background
-          sleep 20  # Add delay to ensure the app has time to start
+          docker build -t python-app .
+          docker run --rm -d --name python-app --network zap-network -p 5000:5000 python-app
 
       - name: Run ZAP Baseline Scan
         run: |
-          docker run -v "$(pwd):/zap/wrk/:rw" -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
-            -t http://127.0.0.1:5000 \
+          docker run --rm -v "$(pwd):/zap/wrk/:rw" --network zap-network ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
+            -t http://python-app:5000 \
             -g /zap/wrk/gen.conf \
             -r /zap/wrk/zap_report.html \
             --autooff
@@ -42,3 +35,6 @@ jobs:
         with:
           name: ZAP Report
           path: zap_report.html
+
+      - name: Cleanup Docker Network
+        run: docker network rm zap-network
