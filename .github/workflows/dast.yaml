@@ -32,11 +32,11 @@ jobs:
           COLOR: "blue"  # Set environment variable if applicable
 
       - name: Wait for Flask Application to Start
-        run: sleep 10  # Adjust based on startup time
+        run: sleep 10  # Adjust based on application startup time
 
       - name: Run OWASP ZAP Docker Scan
         run: |
-          docker run --rm -v $(pwd):/zap/wrk/:rw --network="host" owasp/zap2docker-stable zap-baseline.py -t http://localhost:5000 -r zap_report.html
+          docker run --rm -v $(pwd):/zap/wrk/:rw --network="host" zaproxy/zap-stable zap-baseline.py -t http://localhost:5000 -r zap_report.html
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
