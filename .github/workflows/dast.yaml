@@ -47,3 +47,9 @@ jobs:
         if: always()
         run: |
           cat /zap/wrk/output.json
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: zap_report.html
