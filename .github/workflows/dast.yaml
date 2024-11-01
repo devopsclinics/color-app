@@ -36,7 +36,13 @@ jobs:
 
       - name: Run OWASP ZAP Docker Scan
         run: |
-          docker run --rm -v $(pwd):/zap/wrk/:rw --network="host" zaproxy/zap-stable zap-baseline.py -t http://localhost:5000 -r zap_report.html
+          # Run ZAP scan and save report in the container's internal directory
+          docker run --rm --network="host" zaproxy/zap-stable zap-baseline.py -t http://localhost:5000 -r /zap/zap_report.html
+
+      - name: Copy Report to Workspace
+        # Copy the report from container to workspace
+        run: |
+          docker cp $(docker ps -alq):/zap/zap_report.html zap_report.html
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
