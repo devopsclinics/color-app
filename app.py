@@ -1,9 +1,26 @@
-
-
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, request, make_response
 import os
 
 app = Flask(__name__)
+
+@app.after_request
+def add_security_headers(response):
+    # Anti-clickjacking
+    response.headers["X-Frame-Options"] = "DENY"
+    
+    # Disable content sniffing
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    
+    # Hide server version info
+    response.headers["Server"] = "SecureServer"
+    
+    # Content Security Policy (CSP) header
+    response.headers["Content-Security-Policy"] = "default-src 'self'"
+    
+    # Permissions Policy header
+    response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+    
+    return response
 
 @app.route('/')
 @app.route('/<color>')
@@ -47,7 +64,6 @@ def display_pattern(color=None):
 
         return render_template_string(html_content)
 
-    # Catch and display errors.
     except Exception as e:
         print(e)
         return str(e), 500
