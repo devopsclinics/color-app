@@ -23,7 +23,7 @@ jobs:
 
       # Step to validate Kubernetes YAML files with yamllint
       - name: Lint Kubernetes YAML with yamllint
-        run: yamllint k8s/
+        run: yamllint .
 
       # Step to install Kubeval for Kubernetes schema validation
       - name: Install Kubeval
@@ -33,7 +33,7 @@ jobs:
 
       # Step to validate Kubernetes YAML files with Kubeval
       - name: Validate Kubernetes Manifests with Kubeval
-        run: kubeval k8s/
+        run: kubeval .
 
       # Step to install Hadolint for Dockerfile validation
       - name: Install Hadolint
