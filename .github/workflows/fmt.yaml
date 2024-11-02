@@ -1,0 +1,47 @@
+name: CI Pipeline with Kubernetes YAML and Dockerfile Validation
+
+on: 
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validates-yaml-and-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      # Step to install yamllint for YAML validation
+      - name: Install yamllint
+        run: |
+          pip install --user yamllint
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      # Step to validate Kubernetes YAML files with yamllint
+      - name: Lint Kubernetes YAML with yamllint
+        run: yamllint k8s/
+
+      # Step to install Kubeval for Kubernetes schema validation
+      - name: Install Kubeval
+        run: |
+          wget -O /usr/local/bin/kubeval https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64
+          sudo chmod +x /usr/local/bin/kubeval
+
+      # Step to validate Kubernetes YAML files with Kubeval
+      - name: Validate Kubernetes Manifests with Kubeval
+        run: kubeval k8s/
+
+      # Step to install Hadolint for Dockerfile validation
+      - name: Install Hadolint
+        run: |
+          wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          sudo chmod +x /usr/local/bin/hadolint
+
+      # Step to validate Dockerfile with Hadolint
+      - name: Lint Dockerfile with Hadolint
+        run: hadolint Dockerfile
+
