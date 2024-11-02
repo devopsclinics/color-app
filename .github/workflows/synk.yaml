@@ -82,17 +82,17 @@ jobs:
     #     with:
     #       args: --severity-threshold=high
 
-      - name: Run Snyk to check for vulnerabilities
-        run: snyk test --file=requirements.txt --severity-threshold=high
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    #   - name: Run Snyk to check for vulnerabilities
+    #     run: snyk test --file=requirements.txt --severity-threshold=high
+    #     env:
+    #       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
 
       
-    #   - name: Install Snyk CLI
-    #     run: curl -sL https://static.snyk.io/cli/latest/snyk-linux -o snyk && chmod +x snyk && mv snyk /usr/local/bin/
-    #   - name: Run Snyk Test
-    #     run: snyk test --file=requirements.txt --severity-threshold=high
-    #     env:
-    #       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN || 'default_token' }}
+      - name: Install Snyk CLI
+        run: curl -sL https://static.snyk.io/cli/latest/snyk-linux -o snyk && chmod +x snyk && mv snyk /usr/local/bin/
+      - name: Run Snyk Test
+        run: snyk test --file=requirements.txt --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN || 'default_token' }}
   
