@@ -88,6 +88,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/color-app:${{ github.sha }}
+          format: table
+          output: table.html
 
 
       # Save Trivy results as an artifact
@@ -95,4 +97,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: trivy-report
-          path: trivy-results.log
+          path: table.html
