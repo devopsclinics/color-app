@@ -36,3 +36,15 @@ jobs:
         uses: github/codeql-action/analyze@v2
         with:
           category: "/language:python"
+
+    #   - name: Upload CodeQL Analysis Results
+    #     uses: github/codeql-action/upload-sarif@v2
+    #     with:
+    #       sarif_file: codeql-results.sarif
+    #       enable-prannotations: true
+    #       fail-on-errors: true
+        
+    #   - name: Upload CodeQL Analysis Results as an Artifact
+    #     uses: actions/upload-artifact@v2
+    #     with:
+    #       name: codeql-results
