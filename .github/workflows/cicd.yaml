@@ -42,9 +42,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Tests
+       # Run Unit Tests and save results
+      - name: Run Unit Tests
         run: |
-          python -m unittest discover -s tests
+          mkdir -p test-results/unit
+          python -m unittest discover -s tests/unit > test-results/unit/unit_test_results.txt
 
   # Deploy Job, depends on Test
   deploy:
