@@ -1,0 +1,36 @@
+name: Test
+
+on: 
+  push:
+    branches: [ "main" ]
+
+jobs:
+  setup:
+    name: Graudit Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the Repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set Up Graudit
+      - name: Install Graudit
+        uses: fabasoad/setup-graudit-action@v0
+        with:
+          version: 3.6
+
+      # Step 3: Print Graudit Version (Optional)
+      - name: Print Graudit Version
+        run: graudit -v
+
+      # Step 4: Run Graudit Scan on Root Directory
+      - name: Run Graudit Scan
+        run: graudit -d . > graudit-results.txt
+
+      # Step 5: Upload Graudit Scan Results as an Artifact
+      - name: Upload Graudit Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: graudit-results
+          path: graudit-results.txt
