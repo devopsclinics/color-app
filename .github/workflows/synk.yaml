@@ -27,12 +27,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Run Snyk to Scan Dependencies
+      # # Step 4: Run Snyk to Scan Dependencies
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/python@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     args: test --file=requirements.txt --severity-threshold=high --no-metadata
+
+          
+      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@master
+        uses: snyk/actions/python-3.6@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: test --file=requirements.txt --severity-threshold=high --no-metadata
-
-          
+          args: --severity-threshold=high
