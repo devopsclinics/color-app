@@ -40,9 +40,9 @@ jobs:
 
       # Step 6: Upload the ZAP Report as an artifact
       - name: Upload ZAP Report Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: ZAP-Report
-        path: testreport.html
+        uses: actions/upload-artifact@v3
+        with:
+          name: ZAP-Report
+          path: testreport.html
 
       
