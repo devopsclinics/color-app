@@ -1,3 +1,39 @@
+# name: Unit and Integration Tests
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   test:
+#     name: Run Unit and Integration Tests
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Set Up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.x'
+
+#       - name: Install Dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+
+#       - name: Run Unit Tests
+#         run: |
+#           python -m unittest discover -s tests/unit
+
+#       - name: Run Integration Tests
+#         run: |
+#           python -m unittest discover -s tests/integration
+
+
 name: Unit and Integration Tests
 
 on:
@@ -25,10 +61,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Run Unit Tests and save results
       - name: Run Unit Tests
         run: |
-          python -m unittest discover -s tests/unit
+          mkdir -p test-results/unit
+          python -m unittest discover -s tests/unit > test-results/unit/unit_test_results.txt
 
+      # Run Integration Tests and save results
       - name: Run Integration Tests
         run: |
-          python -m unittest discover -s tests/integration
+          mkdir -p test-results/integration
+          python -m unittest discover -s tests/integration > test-results/integration/integration_test_results.txt
+
+      # Upload both unit and integration test results as artifacts
+      - name: Upload Unit Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: unit-test-results
+          path: test-results/unit/unit_test_results.txt
+
+      - name: Upload Integration Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: integration-test-results
+          path: test-results/integration/integration_test_results.txt
