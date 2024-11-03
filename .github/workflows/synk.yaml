@@ -29,9 +29,9 @@ jobs:
 
       # Step 4: Run Snyk to Scan Dependencies
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@v2
+        uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=requirements.txt --severity-threshold=high --no-metadata
+          args: --file=requirements.txt --severity-threshold=high
           
