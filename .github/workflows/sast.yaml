@@ -37,13 +37,8 @@ jobs:
         with:
           category: "/language:python"
 
-      - name: Upload CodeQL Analysis Results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: /home/runner/work/color-app/results/
-    
-        
       - name: Upload CodeQL Analysis Results as an Artifact
         uses: actions/upload-artifact@v3
         with:
           name: codeql-results
+          path: /home/runner/work/color-app/results/
