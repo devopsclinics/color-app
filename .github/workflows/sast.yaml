@@ -1,3 +1,49 @@
+# name: SAST with CodeQL
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   analyze:
+#     name: Analyze Code with CodeQL
+#     runs-on: ubuntu-latest
+#     permissions:
+#       actions: read
+#       contents: read
+#       security-events: write
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Set Up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.x'
+
+#       - name: Initialize CodeQL
+#         uses: github/codeql-action/init@v2
+#         with:
+#           languages: python
+
+#       - name: Autobuild Project
+#         uses: github/codeql-action/autobuild@v2
+
+#       - name: Perform CodeQL Analysis
+#         uses: github/codeql-action/analyze@v2
+#         with:
+#           category: "/language:python"
+
+#       - name: Upload CodeQL Analysis Results as an Artifact
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: codeql-results
+#           path: /home/runner/work/color-app/results/
+
+
 name: SAST with CodeQL
 
 on:
@@ -35,10 +81,11 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
+          output: codeql-results 
           category: "/language:python"
 
       - name: Upload CodeQL Analysis Results as an Artifact
         uses: actions/upload-artifact@v3
         with:
           name: codeql-results
-          path: /home/runner/work/color-app/results/
+          path: codeql-results 
