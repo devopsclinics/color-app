@@ -33,5 +33,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=requirements.txt --severity-threshold=high
+          args: test --file=requirements.txt --severity-threshold=high --no-metadata
+
           
