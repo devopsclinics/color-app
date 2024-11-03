@@ -29,7 +29,7 @@ jobs:
       - name: Run OWASP ZAP Baseline Scan
         run: |
           docker run --rm --network zap-net -v ${{ github.workspace }}:/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable \
-            zap-baseline.py -t http://python-app:5000 -g /zap/wrk/gen.conf -r /zap/wrk/testreport.html
+            zap-baseline.py -t http://python-app:5000 -g /zap/wrk/gen.conf -r /zap/wrk/testreport.html -c alerts.config
 
       - name: Adjust Permissions for ZAP Output
         run: sudo chmod -R 777 $GITHUB_WORKSPACE
