@@ -37,3 +37,12 @@ jobs:
       - name: Show ZAP Report
         if: always()
         run: cat testreport.html
+
+      # Step 6: Upload the ZAP Report as an artifact
+      - name: Upload ZAP Report Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ZAP-Report
+        path: testreport.html
+
+      
